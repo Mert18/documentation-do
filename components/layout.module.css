@@ -1,0 +1,53 @@
+.main {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+}
+
+.side {
+  grid-column: 1 / 7;
+  background: var(--white-variant);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1.1rem;
+}
+
+.sidetitle {
+  background: var(--red);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9srem;
+  color: var(--white-variant);
+}
+
+.routes {
+  width: 100%;
+}
+.grouptitle {
+  position: relative;
+  background: var(--white-variant-two);
+  padding: 2rem;
+}
+.grouptitle::after {
+  content: "»";
+  position: absolute;
+  padding-left: 1rem;
+}
+.grouplist {
+  padding: 1rem;
+}
+.grouplist li {
+  height: 10vh;
+  width: 100%;
+}
+.grouplist li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  grid-column: 7 / 24;
+}
