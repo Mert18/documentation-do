@@ -1,0 +1,12 @@
+.wrapper {
+}
+
+.header {
+  width: 100%;
+  padding: 2rem;
+  background: var(--white-variant);
+}
+
+.content {
+  padding: 2rem;
+}
