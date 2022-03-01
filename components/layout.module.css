@@ -4,22 +4,23 @@
 }
 
 .side {
-  grid-column: 1 / 7;
+  grid-column: 1 / 5;
   min-height: 80vh;
   background: var(--white-variant);
   display: flex;
   flex-direction: column;
-  font-size: 1.1rem;
+  font-size: 0.8rem;
 }
 
 .sidetitle {
   background: var(--red);
   width: 100%;
-  height: 15vh;
+  height: 9vh;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--white-variant);
+  font-weight: 600;
 }
 
 .routes {
@@ -27,7 +28,8 @@
 }
 .grouptitle {
   background: var(--white-variant-two);
-  padding: 2rem;
+  padding: 0.9rem;
+  font-weight: 300;
 }
 .grouptitle:hover {
   cursor: pointer;
@@ -43,11 +45,11 @@
 }
 .grouplist li a {
   display: block;
-  padding: 1.7rem;
+  padding: 1.2rem;
 }
 
 .content {
-  grid-column: 7 / -1;
+  grid-column: 5 / -1;
 }
 
 .mobilebutton {
