@@ -1,22 +1,15 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import fs from "fs";
-import path from "path";
 import matter from "gray-matter";
 import marked from "marked";
 import "./doc.module.css";
 import classes from "./doc.module.css";
+import { loadCommits } from "../../lib/loadCommits";
 
-const Doc = ({ frontmatter: { title, date, excerpt }, slug, content }) => {
+const Doc = ({ content, commits }) => {
   return (
-    <Layout>
+    <Layout commits={commits}>
       <div className={classes.wrapper}>
-        <div className={classes.header}>
-          <h2 className={classes.title}>{title}</h2>
-          <p className={classes.excerpt}>{excerpt}</p>
-          <p className={classes.date}>{date}</p>
-        </div>
-
         <div className={classes.content}>
           <div dangerouslySetInnerHTML={{ __html: marked(content) }}></div>
         </div>
@@ -26,10 +19,18 @@ const Doc = ({ frontmatter: { title, date, excerpt }, slug, content }) => {
 };
 
 export async function getStaticPaths() {
-  const files = fs.readdirSync(path.join("docs"));
-  const paths = files.map((filename) => ({
+  const response = await fetch(
+    "https://api.bitbucket.org/2.0/repositories/kaesystems/robolaunch/commits"
+  );
+  const res = await response.json();
+  const commits = [];
+  res.values.map((value) => {
+    commits.push(value.hash);
+  });
+
+  const paths = commits.map((commit) => ({
     params: {
-      slug: filename.replace(".md", ""),
+      slug: commit,
     },
   }));
 
@@ -40,15 +41,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const markdownWithMeta = fs.readFileSync(
-    path.join("docs", slug + ".md"),
-    "utf-8"
+  const response = await fetch(
+    `https://bitbucket.org/kaesystems/robolaunch/raw/${slug}/docs/documentation.md`
   );
+  const res = await response.text();
+  const commits = await loadCommits();
 
-  const { data: frontmatter, content } = matter(markdownWithMeta);
+  const { content } = matter(res);
   return {
     props: {
-      frontmatter,
+      commits,
       slug,
       content,
     },
